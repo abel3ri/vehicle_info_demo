@@ -14,7 +14,7 @@ class AppTheme {
       surface: Color(0xFFFFFFFF),
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: Color(0xFFF8F9FA),
       elevation: 0,
     ),
     scaffoldBackgroundColor: const Color(0xFFF8F9FA),
@@ -37,10 +37,10 @@ class AppTheme {
   static ThemeData darkTheme = ThemeData(
     primaryColor: const Color(0xFF03624C),
     appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFF1E1E1E),
+      backgroundColor: Color(0x000A0A0A),
       elevation: 0,
     ),
-    scaffoldBackgroundColor: const Color.fromARGB(0, 10, 10, 10),
+    scaffoldBackgroundColor: const Color(0x000A0A0A),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     useMaterial3: true,
     fontFamily: GoogleFonts.montserrat().fontFamily,
