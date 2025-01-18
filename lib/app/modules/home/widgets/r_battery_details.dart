@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vehicle_monitoring_demo/app/modules/home/widgets/r_battery_indicator.dart';
 
 class RBatteryDetails extends StatelessWidget {
@@ -18,7 +19,7 @@ class RBatteryDetails extends StatelessWidget {
     return Row(
       children: [
         RBatteryIndicator(batteryLevel: batteryLevel),
-        SizedBox(width: 16),
+        SizedBox(width: Get.width * 0.02),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -34,7 +35,7 @@ class RBatteryDetails extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text.rich(
               TextSpan(
                 text: range.toStringAsFixed(0),

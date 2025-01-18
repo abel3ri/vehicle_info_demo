@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lottie/lottie.dart' hide Marker;
 import 'package:vehicle_monitoring_demo/app/modules/home/views/car_location_view.dart';
 import 'package:vehicle_monitoring_demo/app/modules/home/widgets/r_battery_details.dart';
+import 'package:vehicle_monitoring_demo/app/modules/home/widgets/show_diaolog.dart';
 import 'package:vehicle_monitoring_demo/core/controllers/theme_controller.dart';
 import 'package:vehicle_monitoring_demo/core/widgets/r_card.dart';
 
@@ -18,7 +19,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tesla Model 3"),
+        title: const Text("Tesla Model 3"),
         titleTextStyle: context.textTheme.headlineLarge,
         actions: [
           Padding(
@@ -67,7 +68,7 @@ class HomeView extends GetView<HomeController> {
                     onPressed: () async {
                       controller.vehicleInfoSubscription?.resume();
                     },
-                    icon: Icon(Icons.refresh_rounded),
+                    icon: const Icon(Icons.refresh_rounded),
                   ),
                 ],
               ),
@@ -103,7 +104,7 @@ class HomeView extends GetView<HomeController> {
                       case 0:
                         return RCard(
                           onTap: () async {
-                            await controller.showEditDialog(type: "battery");
+                            await showEditDialog(type: "battery");
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,6 +127,9 @@ class HomeView extends GetView<HomeController> {
                       case 1:
                         final isLocked = vehicleInfo?.isLocked ?? true;
                         return RCard(
+                          onTap: () async {
+                            await controller.toggleLock();
+                          },
                           child: Row(
                             children: [
                               Icon(
@@ -161,14 +165,14 @@ class HomeView extends GetView<HomeController> {
                                 ],
                               ),
                               const SizedBox(height: 8),
-                              Text("Addis Ababa, Ethiopia"),
+                              const Text("Addis Ababa, Ethiopia"),
                             ],
                           ),
                         );
                       case 3:
                         return RCard(
                           onTap: () async {
-                            await controller.showEditDialog(type: "coolant");
+                            await showEditDialog(type: "coolant");
                           },
                           child: Wrap(
                             children: [
@@ -176,7 +180,7 @@ class HomeView extends GetView<HomeController> {
                                 "Coolant Temp",
                                 style: context.textTheme.titleSmall,
                               ),
-                              SizedBox(width: 12),
+                              const SizedBox(width: 12),
                               Text("${vehicleInfo?.coolantTemp}",
                                   style: context.textTheme.titleLarge),
                             ],
@@ -185,11 +189,11 @@ class HomeView extends GetView<HomeController> {
                       case 4:
                         return RCard(
                           onTap: () async {
-                            await controller.showEditDialog(type: "rpm");
+                            await showEditDialog(type: "rpm");
                           },
                           child: Column(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.speed,
                                 size: 64,
                               ),
@@ -199,7 +203,7 @@ class HomeView extends GetView<HomeController> {
                                     "RPM",
                                     style: context.textTheme.titleSmall,
                                   ),
-                                  SizedBox(width: 12),
+                                  const SizedBox(width: 12),
                                   Text("${vehicleInfo?.rpm}",
                                       style: context.textTheme.titleLarge),
                                 ],
@@ -215,7 +219,7 @@ class HomeView extends GetView<HomeController> {
                 const SizedBox(height: 16),
                 Text("Car Location", style: context.textTheme.titleLarge),
                 const SizedBox(height: 8),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: Get.height * 0.25,
                   child: Stack(
@@ -224,10 +228,10 @@ class HomeView extends GetView<HomeController> {
                         borderRadius: BorderRadius.circular(16),
                         child: GoogleMap(
                           markers: {
-                            Marker(
-                              markerId: const MarkerId("car_location"),
-                              position: const LatLng(
-                                  9.023253588586133, 38.751833094027624),
+                            const Marker(
+                              markerId: MarkerId("car_location"),
+                              position:
+                                  LatLng(9.023253588586133, 38.751833094027624),
                             ),
                           },
                           initialCameraPosition: const CameraPosition(
@@ -242,7 +246,7 @@ class HomeView extends GetView<HomeController> {
                         right: 8,
                         child: IconButton(
                           onPressed: () {
-                            Get.to(() => CarLocationView());
+                            Get.to(() => const CarLocationView());
                           },
                           icon: CircleAvatar(
                             radius: 16,

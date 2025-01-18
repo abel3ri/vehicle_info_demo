@@ -9,9 +9,9 @@ class CarLocationView extends StatelessWidget {
     return Scaffold(
       body: GoogleMap(
         markers: {
-          Marker(
-            markerId: const MarkerId("car_location"),
-            position: const LatLng(9.023253588586133, 38.751833094027624),
+          const Marker(
+            markerId: MarkerId("car_location"),
+            position: LatLng(9.023253588586133, 38.751833094027624),
           ),
         },
         initialCameraPosition: const CameraPosition(

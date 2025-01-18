@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vehicle_monitoring_demo/app/data/models/vehicle_info.dart';
 import 'package:vehicle_monitoring_demo/app/data/services/vehicle_service.dart';
-import 'package:vehicle_monitoring_demo/app/modules/home/widgets/r_text_field.dart';
 
 class HomeController extends GetxController {
   late VehicleService vehicleService;
@@ -34,74 +33,64 @@ class HomeController extends GetxController {
         result.fold((l) {
           vehicleInfo.value = null;
           isLoading.value = false;
-          Get.snackbar("Error", l);
+          Get.snackbar(
+            "Error",
+            l,
+            snackPosition: SnackPosition.BOTTOM,
+          );
         }, (r) {
           vehicleInfo.value = r;
+          initFields();
           isLoading.value = false;
         });
       },
       onError: (e) {
-        Get.snackbar("Error", e);
+        Get.snackbar(
+          "Error",
+          e,
+          snackPosition: SnackPosition.BOTTOM,
+        );
         isLoading.value = false;
       },
     );
   }
 
-  Future<void> showEditDialog({required String type}) async {
-    await showDialog(
-      context: Get.context!,
-      builder: (context) => AlertDialog(
-        title: Text("Update vehicle info"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (type == 'battery') ...[
-              RTextField(
-                controller: batteryController,
-                labelText: "Battery",
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 8),
-              RTextField(
-                controller: powerController,
-                labelText: "Power",
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 8),
-              RTextField(
-                controller: minsRemainingController,
-                labelText: "Minutes remaining",
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 8),
-              RTextField(
-                controller: distanceController,
-                labelText: "Range",
-                keyboardType: TextInputType.number,
-              ),
-            ],
-            if (type == 'rpm') ...[
-              RTextField(
-                controller: rpmController,
-                labelText: "RPM",
-                keyboardType: TextInputType.number,
-              ),
-            ],
-            if (type == 'coolant') ...[
-              RTextField(
-                controller: coolantTempController,
-                labelText: "Coolant Temp",
-                keyboardType: TextInputType.number,
-              ),
-            ],
-            SizedBox(height: 8),
-            FilledButton(
-              onPressed: () {},
-              child: Text("Submit"),
-            ),
-          ],
-        ),
-      ),
+  Future<void> toggleLock() async {
+    await vehicleService.updateVehicleInfo({
+      "is_locked": !vehicleInfo.value!.isLocked!,
+    });
+  }
+
+  Future<void> updateVehicleInfo() async {
+    isLoading.value = true;
+    Get.back();
+    final result = await vehicleService.updateVehicleInfo({
+      "battery": int.parse(batteryController.text),
+      "coolant_temp": double.parse(coolantTempController.text),
+      "distance": double.parse(distanceController.text),
+      "power": double.parse(powerController.text),
+      "remaining_mins": int.parse(minsRemainingController.text),
+      "rpm": double.parse(rpmController.text),
+    });
+
+    result.fold(
+      (failure) {
+        isLoading.value = false;
+        Get.snackbar(
+          "Error",
+          failure,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      },
+      (_) {
+        isLoading.value = false;
+
+        Get.snackbar(
+          "Success",
+          "Vehicle information updated successfully",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      },
     );
   }
 
@@ -115,6 +104,16 @@ class HomeController extends GetxController {
     } else {
       return "$remainingMinutes min remaining";
     }
+  }
+
+  void initFields() {
+    if (vehicleInfo.value == null) return;
+    batteryController.text = vehicleInfo.value!.battery.toString();
+    minsRemainingController.text = vehicleInfo.value!.remainingMins.toString();
+    powerController.text = vehicleInfo.value!.power.toString();
+    distanceController.text = vehicleInfo.value!.distance.toString();
+    rpmController.text = vehicleInfo.value!.rpm.toString();
+    coolantTempController.text = vehicleInfo.value!.coolantTemp.toString();
   }
 
   @override

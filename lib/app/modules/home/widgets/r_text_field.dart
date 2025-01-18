@@ -9,13 +9,13 @@ class RTextField extends StatelessWidget {
   final bool obscureText;
 
   const RTextField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.labelText,
     this.keyboardType = TextInputType.text,
     this.icon,
     this.obscureText = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

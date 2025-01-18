@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:get/get.dart';
@@ -26,9 +24,8 @@ class VehicleService extends GetConnect {
         }
 
         final data = snapshot.data()!;
-        log(data.toString());
+
         final vehicleInfo = VehicleInfo.fromJson(data);
-        log(vehicleInfo.toString());
         return right<String, VehicleInfo>(vehicleInfo);
       }).handleError((error) {
         return left(error.toString());
@@ -41,16 +38,15 @@ class VehicleService extends GetConnect {
   }
 
   Future<Either<String, void>> updateVehicleInfo(
-      Map<String, dynamic> updatedData) async {
+    Map<String, dynamic> updatedData,
+  ) async {
     try {
       final docRef = db.collection("vehicle_info").doc("vehicle_info");
       await docRef.update(updatedData);
       return right(null);
     } on FirebaseException catch (e) {
-      log("Firebase error: ${e.message}");
       return left("Firebase error: ${e.message}");
     } catch (e) {
-      log("An error occurred: $e");
       return left("An error occurred: $e");
     }
   }

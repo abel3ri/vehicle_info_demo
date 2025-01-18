@@ -14,7 +14,7 @@ class RBatteryIndicator extends StatelessWidget {
           "${batteryLevel.toStringAsFixed(0)}%",
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
           width: 48,
           height: 100,
