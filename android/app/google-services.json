@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "403813949887",
+    "project_id": "vehicle-monitoring-demo",
+    "storage_bucket": "vehicle-monitoring-demo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:403813949887:android:5fa05b3b2f19d6cb97c10a",
+        "android_client_info": {
+          "package_name": "com.example.vehicle_monitoring_demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBODnU1hfXhmFycee-Puwh4q3644Ydd_0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
